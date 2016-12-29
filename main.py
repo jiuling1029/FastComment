@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import QTableWidget
 from PyQt5.QtWidgets import QTableWidgetItem
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
-import pyexcel as pe
+import pyexcel
 from coral import Coral
 from selenium import webdriver
 import pickle
@@ -81,7 +81,7 @@ class WorldThread(QThread):
                 # 记录时间
                 sendTime.append(time.strftime('%Y-%m-%d %H:%M'))
                 # 发送提示
-                self.statusBarSignal.emit('【' + data['引导内容'] + '】评论成功！')
+                self.statusBarSignal.emit('【' + data['QQ号码'] + '】---【' + data['视频标题'] + '】评论成功！')
                 # 等待一段时间再进行下一个
                 time.sleep(self.wait_time)
             driver.quit()
@@ -188,8 +188,8 @@ class Main_Ui(QMainWindow):
             # 将本次的打开记录保存起来
             self.preferences.lastOpenFilePath, self.preferences.lastOpenFile = os.path.split(fname[0])
             # 获取表格中的数据
-            datas = pe.iget_records(file_name=fname[0])
-            self.sheet = pe.get_sheet(file_name=fname[0])
+            datas = pyexcel.iget_records(file_name=fname[0])
+            self.sheet = pyexcel.get_sheet(file_name=fname[0])
             # 跳过第一行的标题
             self.preferences.lastComments = []
             for i, record in enumerate(datas):
